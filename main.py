@@ -39,16 +39,31 @@ plt.figure(figsize=(6, len(labels) * 0.3))
 plt.barh(y_positions, values, align='center', color=colors)
 
 # Set labels and ticks
-plt.yticks(y_positions, labels)
-plt.xlim(-6000000, 6000000)
-plt.xticks(np.arange(-6000000, 6000001, 1000000))
-
-# Custom formatter to display absolute value of ticks in millions
 def millions(x, pos):
     return f'{abs(int(x / 1_000_000))}'
 
-formatter = mticker.FuncFormatter(millions)
-plt.gca().xaxis.set_major_formatter(formatter)
+def absXticks(x, pos):
+    return f'{abs(int(x))}'
+
+max_abs_value = max(abs(num) for num in values)
+if max_abs_value > 100:
+
+    plt.yticks(y_positions, labels)
+    plt.xlim(-6000000, 6000000)
+    plt.xticks(np.arange(-6000000, 6000001, 1000000))
+    formatter = mticker.FuncFormatter(millions)
+    plt.gca().xaxis.set_major_formatter(formatter)
+    plt.xlabel('In Millions', labelpad=10)
+else:
+    plt.yticks(y_positions, labels)
+    plt.xlim(-max_abs_value, max_abs_value)
+    plt.xticks(np.arange(-max_abs_value, max_abs_value + 1))
+    formatter = mticker.FuncFormatter(absXticks)
+    plt.gca().xaxis.set_major_formatter(formatter)
+    plt.xlabel('Electoral Votes', labelpad=10)
+
+
+
 
 plt.grid(axis='x', linestyle='--', color='gray', alpha=0.7)
 
