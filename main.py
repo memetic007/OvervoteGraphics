@@ -71,7 +71,7 @@ plt.grid(axis='x', linestyle='--', color='gray', alpha=0.7)
 plt.gca().invert_yaxis()
 
 # Labels and title
-plt.xlabel('In Millions', labelpad=10)
+
 plt.title(header, pad=20)  # Set the plot title to the user-provided header
 
 # Adjust layout to prevent clipping
